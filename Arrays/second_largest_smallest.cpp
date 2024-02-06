@@ -1,4 +1,7 @@
 /*
+
+Link: https://www.codingninjas.com/codestudio/problems/ninja-and-the-second-order-elements_6581960?utm_source=striver&utm_medium=website&utm_campaign=a_zcoursetuf
+
 Problem statement
 You have been given an array ‘a’ of ‘n’ unique non-negative integers.
 
