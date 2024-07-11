@@ -40,18 +40,14 @@ using namespace std;
 class Solution {
 public:
     int maxSubArray(vector<int>& nums) {
-        int curr = 0, ans = 0, l = nums[0];
+        int maximumSum = -1e9, currSum = 0, largestNumber = -1e9;
         for(int i=0; i<nums.size(); i++){
-            l = max(l, nums[i]);
-            curr += nums[i];
-            ans = max(ans, curr);
-            if(curr < 0){
-                curr = 0;
-            }
+            largestNumber = max(largestNumber, nums[i]);
+            currSum += nums[i];
+            maximumSum = max(maximumSum, currSum);
+            if(currSum < 0) currSum = 0;
         }
-        if(l < 0){
-            return l;
-        }
-        return ans;
+        if(largestNumber < 0) return largestNumber;
+        return maximumSum;
     }
 };
