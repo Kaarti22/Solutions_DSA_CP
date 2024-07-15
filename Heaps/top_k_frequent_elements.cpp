@@ -49,3 +49,28 @@ public:
         return ans;
     }
 };
+
+// Follow up in O(n)
+class Solution {
+public:
+    vector<int> topKFrequent(vector<int>& nums, int k) {
+        unordered_map<int, int>m;
+        for(auto it: nums){
+            m[it]++;
+        }
+        vector<vector<int>>count(nums.size()+1, vector<int>());
+        for(auto it: m){
+            count[it.second].push_back(it.first);
+        }
+        vector<int>ans;
+        int i = count.size()-1;
+        while(i >= 0 && k > 0){
+            if(count[i].size() > 0){
+                k -= count[i].size();
+                ans.insert(ans.end(), count[i].begin(), count[i].end());
+            }
+            i--;
+        }
+        return ans;
+    }
+};
