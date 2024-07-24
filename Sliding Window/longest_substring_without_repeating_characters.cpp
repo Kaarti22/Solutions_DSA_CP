@@ -37,21 +37,20 @@ using namespace std;
 class Solution {
 public:
     int lengthOfLongestSubstring(string s) {
-        int ans = 0, n = s.size();
-        unordered_map<char, int>m;
+        unordered_map<int, int>m;
+        int n = s.size();
         int i = 0, j = 0;
+        int ans = 0;
         while(j < n){
             m[s[j]]++;
-            if(m[s[j]] == 1){
-                ans = max(ans, j - i + 1);
-                j++;
-            } else {
+            if(m[s[j]] > 1){
                 while(m[s[j]] > 1){
                     m[s[i]]--;
                     i++;
                 }
-                j++;
             }
+            ans = max(ans, j - i + 1);
+            j++;
         }
         return ans;
     }
