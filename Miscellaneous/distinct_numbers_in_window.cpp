@@ -59,7 +59,7 @@ Explanation 2:
 #include <bits/stdc++.h>
 using namespace std;
 
-vector<int> Solution::dNums(vector<int> &A, int B) {
+vector<int> dNums(vector<int> &A, int B) {
     unordered_map<int, int>m;
     int n = A.size();
     if(B > n) return {};
