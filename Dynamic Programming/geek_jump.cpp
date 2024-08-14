@@ -30,7 +30,7 @@ using namespace std;
 class Solution {
   public:
     int minimumEnergy(vector<int>& height, int n) {
-        vector<int>dp(n, 0);
+        vector<int>dp(n);
         dp[0] = 0;
         if(n == 1) return 0;
         dp[1] = abs(height[1] - height[0]);
