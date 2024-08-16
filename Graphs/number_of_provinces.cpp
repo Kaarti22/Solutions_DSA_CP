@@ -1,101 +1,71 @@
 /*
-Given an undirected graph with V vertices. We say two vertices u and v belong to a single province if there is a path from u to v. Your task is to find the number of provinces.
+Link: https://leetcode.com/problems/number-of-provinces/description/
 
-Note: A province is a group of directly or indirectly connected cities and no other cities outside the group.
+There are n cities. Some of them are connected, while some are not. If city a is connected directly with city b, and city b is connected directly with city c, then city a is connected indirectly with city c.
+
+A province is a group of directly or indirectly connected cities and no other cities outside of the group.
+
+You are given an n x n matrix isConnected where isConnected[i][j] = 1 if the ith city and the jth city are directly connected, and isConnected[i][j] = 0 otherwise.
+
+Return the total number of provinces.
+
+ 
+
+Example 1:
+
+
+Input: isConnected = [[1,1,0],[1,1,0],[0,0,1]]
+Output: 2
+Example 2:
+
+
+Input: isConnected = [[1,0,0],[0,1,0],[0,0,1]]
+Output: 3
+ 
+
+Constraints:
+
+1 <= n <= 200
+n == isConnected.length
+n == isConnected[i].length
+isConnected[i][j] is 1 or 0.
+isConnected[i][i] == 1
+isConnected[i][j] == isConnected[j][i]
 */
 
 #include <bits/stdc++.h>
 using namespace std;
 
-#define vi vector<int>
-#define vvi vector<vector<int>>
-#define MOD 1000000007
-#define pb push_back
-#define popb pop_back
-#define rep(i,a,b) for(int i=a; i<b; i++)
-#define ll long long
-#define all(v) v.begin(),v.end()
-
-void inparr(int arr[], int n){
-    for(int i=0;i<n;i++){
-        cin>>arr[i];
-    }
-}
-
-void disarr(int arr[], int n){
-    for(int i=0;i<n;i++){
-        cout<<arr[i]<<' ';
-    }
-    cout<<endl;
-}
-
-void inpvec(vi &v, int n){
-    for(int i=0;i<n;i++){
-        cin>>v[i];
-    }
-}
-
-void disvec(vi v, int n){
-    for(int i=0;i<n;i++){
-        cout<<v[i]<<' ';
-    }
-    cout<<endl;
-}
-
-int madd(int a,int b) {
-    return (a+b)%MOD;
-}
-
-int msub(int a,int b){
-    return (((a-b)%MOD)+MOD)%MOD;
-}
-
-int mmul(int a,int b){
-    return ((a%MOD)*(b%MOD))%MOD;
-}
-
-void bfs(vvi &adj, int n, int start, vi &vis){
-    queue<int>q;
-    q.push(start);
-    vis[start] = 1;
-    while(!q.empty()){
-        int node = q.front();
-        q.pop();
-        for(int j=0; j<adj[0].size(); j++){
-            if(adj[node][j] == 1){
-                if(!vis[j]){
-                    q.push(j);
-                    vis[j] = 1;
+class Solution {
+public:
+    void bfs(vector<vector<int>>& adj, vector<int>& vis, int V, int n){
+        queue<int>q;
+        q.push(V);
+        vis[V] = 1;
+        while(!q.empty()){
+            int node = q.front();
+            q.pop();
+            for(int j=0; j<n; j++){
+                if(adj[node-1][j] == 1){
+                    if(vis[j+1] == 0){
+                        vis[j+1] = 1;
+                        q.push(j+1);
+                    }
                 }
+            } 
+        }
+    }
+
+    int findCircleNum(vector<vector<int>>& isConnected) {
+        int ans = 0;
+        int n = isConnected.size();
+        vector<int>vis(n+1, 0);
+        for(int i=1; i<=n; i++){
+            if(vis[i] == 0){
+                bfs(isConnected, vis, i, n);
+                ans++;
             }
         }
+        return ans;
     }
-}
-
-int numberOfProvinces(vvi &adj, int n){
-    vi vis(n, 0);
-    int c = 0;
-    rep(i,0,n){
-        if(!vis[i]){
-            bfs(adj, n, i, vis);
-            c++;
-        }
-    }
-    return c;
-}
-
-int main(){
-    int n,m;
-    cin>>n>>m;
-    vvi adj(n+1, vi(n+1, 0));
-    rep(i,0,m){
-        int u,v;
-        cin>>u>>v;
-        adj[u][v] = 1;
-        adj[v][u] = 1;
-    }
-    // Space Complexity = O(n)
-    // Time complexity = O(n) + O(n) + O(2*E) in adj list..
-    cout<<numberOfProvinces(adj, n)<<endl;
-    return 0;
-}
+};
