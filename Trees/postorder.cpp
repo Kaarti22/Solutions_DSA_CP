@@ -44,23 +44,18 @@ struct TreeNode {
  
 // Recursive solution
 class Solution {
+private:
+    void postOrder(TreeNode* root, vector<int>& v){
+        if(!root) return;
+        postOrder(root->left, v);
+        postOrder(root->right, v);
+        v.push_back(root->val);
+    }
+
 public:
-    vector<int> inorderTraversal(TreeNode* root) {
+    vector<int> postorderTraversal(TreeNode* root) {
         vector<int>ans;
-        stack<TreeNode* >st;
-        TreeNode* node = root;
-        while(1){
-            if(node != nullptr){
-                st.push(node);
-                node = node->left;
-            } else {
-                if(st.empty()) break;
-                node = st.top();
-                st.pop();
-                ans.push_back(node->val);
-                node = node->right;
-            }
-        }
+        postOrder(root, ans);
         return ans;
     }
 };
