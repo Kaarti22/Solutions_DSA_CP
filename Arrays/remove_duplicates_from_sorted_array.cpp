@@ -35,15 +35,16 @@ using namespace std;
 class Solution {
 public:
     int removeDuplicates(vector<int>& nums) {
-        set<int>s;
-        for(auto it: nums){
-            s.insert(it);
+        int prev = nums[0];
+        int i = 0, j = 1, n = nums.size();
+        while(j < n){
+            if(nums[j] != prev){
+                i++;
+                swap(nums[i], nums[j]);
+                prev = nums[i];
+            }
+            j++;
         }
-        int i=0;
-        for(auto it: s){
-            nums[i] = it;
-            i++;
-        }
-        return s.size();
+        return i + 1;
     }
 };
