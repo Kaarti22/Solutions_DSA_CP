@@ -37,28 +37,21 @@ Constraints:
 #include <bits/stdc++.h>
 using namespace std;
 
-class Solution{
-public:	
-	// Function returns the second
-	// largest elements
-	int print2largest(int arr[], int n) {
-	    int maxi = arr[0];
-	    for(int i=1; i<n; i++){
-	        if(arr[i] > maxi){
-	            maxi = arr[i];
-	        }
-	    }
-	    for(int i=0; i<n; i++){
-	        if(arr[i] == maxi){
-	            arr[i] = -1;
-	        }
-	    }
-	    int secMaxi = arr[0];
-	    for(int i=1; i<n; i++){
-	        if(arr[i] > secMaxi){
-	            secMaxi = arr[i];
-	        }
-	    }
-	    return secMaxi;
-	}
+class Solution {
+  public:
+    // Function returns the second
+    // largest elements
+    int print2largest(vector<int> &arr) {
+        int maxi = INT_MIN, secondMaxi = INT_MIN;
+        for(auto it: arr){
+            if(it > maxi){
+                secondMaxi = maxi;
+                maxi = it;
+            } else if(it > secondMaxi && it < maxi){
+                secondMaxi = it;
+            }
+        }
+        if(secondMaxi == INT_MIN) return -1;
+        return secondMaxi;
+    }
 };
