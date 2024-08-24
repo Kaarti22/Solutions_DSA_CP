@@ -31,18 +31,15 @@ Constraints:
 using namespace std;
 
 class Solution {
-private:
-    int fun(vector<int>& nums, vector<int>& dp, int ind){
-        if(ind < 0) return 0;
-        if(ind == 0) return nums[ind];
-        if(dp[ind] != -1) return dp[ind];
-        return dp[ind] = max(nums[ind] + fun(nums, dp, ind-2), fun(nums, dp, ind-1));
-    }
-
 public:
     int rob(vector<int>& nums) {
         int n = nums.size();
-        vector<int>dp(n, -1);
-        return fun(nums, dp, n-1);
+        if(n == 1) return nums[0];
+        vector<int>dp(n);
+        dp[0] = nums[0], dp[1] = max(nums[0], nums[1]);
+        for(int i=2; i<n; i++){
+            dp[i] = max(dp[i-1], nums[i] + dp[i-2]);
+        }
+        return dp[n-1];
     }
 };
