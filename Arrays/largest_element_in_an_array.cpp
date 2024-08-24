@@ -17,10 +17,11 @@ Explanation: From the array {1, 2, 3, 4, 5}, the largest element is 5.
 #include <bits/stdc++.h> 
 using namespace std;
 
-int largestElement(vector<int> &arr, int n) {
-    int maxi = arr[0];
-    for(int i=1; i<n; i++){
-        maxi = max(maxi, arr[i]);
+class Solution {
+  public:
+    int largest(vector<int> &arr) {
+        int maxi = INT_MIN;
+        for(auto it: arr) maxi = max(maxi, it);
+        return maxi;
     }
-    return maxi;
-}
+};
