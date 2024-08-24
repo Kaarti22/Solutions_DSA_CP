@@ -48,8 +48,7 @@ public:
         for(int i=0; i<s.size(); i++){
             if(s[i] == ' '){
                 if(t != ""){
-                    ans += t;
-                    ans += " ";
+                    ans = t + " " + ans;
                     t = "";
                 }
             } else {
@@ -57,27 +56,9 @@ public:
             }
         }
         if(t != ""){
-            ans += t;
-            ans += " ";
+            ans = t + " " + ans;
         }
         ans.pop_back();
-        reverse(ans.begin(), ans.end());
-        int st = 0, end = -1;
-        for(int i=0; i<ans.size(); i++){
-            if(ans[i] == ' '){
-                end = i;
-                reverse(ans.begin() + st, ans.begin() + end);
-                st = i+1;
-            }
-        }
-        st = -1;
-        for(int i=ans.size()-1; i>=0; i--){
-            if(ans[i] == ' '){
-                st = i;
-                break;
-            }
-        }
-        reverse(ans.begin() + st + 1, ans.end());
         return ans;
     }
 };
