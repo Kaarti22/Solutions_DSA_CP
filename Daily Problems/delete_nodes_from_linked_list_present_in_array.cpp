@@ -1,0 +1,105 @@
+/*
+Link: https://leetcode.com/problems/delete-nodes-from-linked-list-present-in-array/description/
+
+You are given an array of integers nums and the head of a linked list. Return the head of the modified linked list after removing all nodes from the linked list that have a value that exists in nums.
+
+ 
+
+Example 1:
+
+Input: nums = [1,2,3], head = [1,2,3,4,5]
+
+Output: [4,5]
+
+Explanation:
+
+
+
+Remove the nodes with values 1, 2, and 3.
+
+Example 2:
+
+Input: nums = [1], head = [1,2,1,2,1,2]
+
+Output: [2,2,2]
+
+Explanation:
+
+
+
+Remove the nodes with value 1.
+
+Example 3:
+
+Input: nums = [5], head = [1,2,3,4]
+
+Output: [1,2,3,4]
+
+Explanation:
+
+
+
+No node has value 5.
+
+ 
+
+Constraints:
+
+1 <= nums.length <= 105
+1 <= nums[i] <= 105
+All elements in nums are unique.
+The number of nodes in the given list is in the range [1, 105].
+1 <= Node.val <= 105
+The input is generated such that there is at least one node in the linked list that has a value not present in nums.
+*/
+
+#include <bits/stdc++.h>
+using namespace std;
+
+// Definition for singly-linked list.
+struct ListNode {
+    int val;
+    ListNode *next;
+    ListNode() : val(0), next(nullptr) {}
+    ListNode(int x) : val(x), next(nullptr) {}
+    ListNode(int x, ListNode *next) : val(x), next(next) {}
+};
+
+class Solution {
+public:
+    ListNode* modifiedList(vector<int>& nums, ListNode* head) {
+        map<int, vector<int>>m;
+        ListNode* temp = head;
+        int i = 0;
+        while(temp){
+            m[temp->val].push_back(i);
+            i++;
+            temp = temp->next;
+        }
+        for(auto it: nums){
+            m.erase(it);
+        }
+        vector<pair<int, int>>v;
+        for(auto it: m){
+            for(auto j: it.second){
+                v.push_back({it.first, j});
+            }
+        }
+        sort(v.begin(), v.end(), [&](pair<int, int>& p1, pair<int, int>& p2){
+            return p1.second < p2.second;
+        });
+        ListNode* ans = nullptr;
+        temp = ans;
+        for(auto it: v){
+            ListNode* newNode = new ListNode(it.first);
+            if(!temp){
+                ans = newNode;
+                temp = ans;
+                continue;
+            }
+            temp->next = newNode;
+            temp = newNode;
+        }
+        return ans;
+    }
+};
