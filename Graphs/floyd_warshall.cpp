@@ -27,6 +27,8 @@ Constraints:
 #include <bits/stdc++.h>
 using namespace std;
 
+#define rep(i,a,b) for(int i=a; i<b; i++)
+
 class Solution {
   public:
 	void shortest_distance(vector<vector<int>>&matrix){
@@ -59,3 +61,22 @@ class Solution {
 	    }
 	}
 };
+
+int main(){
+	vector<vector<int>>v = {
+		{0, 4, -1, 5, -1},
+		{-1, 0, 1, -1, 6},
+		{2, -1, 0, 3, -1},
+		{-1, -1, 1, 0, 2},
+		{1, -1, -1, 4, 0},
+	};
+	Solution* obj;
+	obj->shortest_distance(v);
+	rep(i,0,5){
+		rep(j,0,5){
+			cout<<v[i][j]<<" ";
+		}
+		cout<<endl;
+	}
+	return 0;
+}
