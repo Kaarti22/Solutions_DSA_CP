@@ -35,31 +35,32 @@ nums is a non-decreasing array.
 using namespace std;
 
 class Solution {
-public:
-    vector<int> searchRange(vector<int>& nums, int target) {
+private:
+    int index(vector<int>& nums, int target, bool f){
         int n = nums.size();
-        int low = 0, high = n-1;
-        int index = -1;
+        int low = 0, high = n - 1;
+        int ind = -1;
         while(low <= high){
             int mid = low + (high - low)/2;
-            if(nums[mid] == target){
-                index = mid;
-                break;
+            if(nums[mid] < target) low = mid + 1;
+            else if(nums[mid] > target) high = mid - 1;
+            else {
+                ind = mid;
+                /*
+                    f = 1 -> find leftMost index
+                    f = 0 -> find rightMost index
+                */
+                if(f) high = mid - 1;
+                else low = mid + 1;
             }
-            if(nums[mid] < target){
-                low = mid + 1;
-            } else {
-                high = mid - 1;
-            }
         }
-        if(index == -1) return {-1, -1};
-        int leftIndex = index, rightIndex = index;
-        while(leftIndex >= 0 && nums[leftIndex] == target){
-            leftIndex--;
-        }
-        while(rightIndex < n && nums[rightIndex] == target){
-            rightIndex++;
-        }
-        return {leftIndex + 1, rightIndex - 1};
+        return ind;
+    }
+
+public:
+    vector<int> searchRange(vector<int>& nums, int target) {
+        int left = index(nums, target, 1);
+        int right = index(nums, target, 0);
+        return {left, right};
     }
 };
