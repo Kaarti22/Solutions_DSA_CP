@@ -32,13 +32,13 @@ resulting in a minimum distance of 3.
 #include <bits/stdc++.h>
 using namespace std;
 
+#define int long long
 #define vi vector<int>
 #define vvi vector<vector<int>>
 #define MOD 1000000007
 #define pb push_back
 #define popb pop_back
 #define rep(i,a,b) for(int i=a; i<b; i++)
-#define ll long long
 #define all(v) v.begin(),v.end()
 
 void inparr(int arr[], int n){
@@ -81,26 +81,25 @@ int mmul(int a,int b){
 
 class Kaarti{
 private:
-    bool canPlaceCows(vi& coordinates, int n, int distance, int cows){
-        int countOfCows = 1;
-        int lastCow = coordinates[0];
+    bool canPlaceCows(vi& v, int n, int c, int dist){
+        int count = 1;
+        int last = v[0];
         rep(i,1,n){
-            if(coordinates[i] - lastCow >= distance){
-                countOfCows++;
-                lastCow = coordinates[i];
+            if(v[i] - last >= dist){
+                count++;
+                last = v[i];
             }
         }
-        return countOfCows >= cows;
+        return count >= c;
     }
 
 public:
-    void method(vi &coordinates, int n, int cows){
-        sort(all(coordinates));
-        int low = 1;
-        int high = coordinates[n-1] - coordinates[0];
+    void method(vi &v, int n, int c){
+        sort(all(v));
+        int low = 1, high = v[n-1] - v[0];
         while(low <= high){
             int mid = low + (high - low)/2;
-            if(canPlaceCows(coordinates, n, mid, cows)){
+            if(canPlaceCows(v, n, c, mid)){
                 low = mid + 1;
             } else {
                 high = mid - 1;
@@ -110,7 +109,7 @@ public:
     }
 };
 
-int main(){
+int32_t main(){
     int testcase;
     cin>>testcase;
     for(int t=0; t<testcase; t++){
